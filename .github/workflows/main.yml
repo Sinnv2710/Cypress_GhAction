@@ -12,16 +12,8 @@ jobs:
      runs-on: ubuntu-latest
      steps:
        - name: Install
-        uses: cypress-io/github-action@v2
-          with:
-            runTests: false
          run: yarn build
        - name: Save Cypress artifacts
-         uses: actions/upload-artifact@v2
-         with:
-           name: build
-           if-no-files-found: error
-           path: build
 
   e2e_tests:
       runs-on: ubuntu-latest
