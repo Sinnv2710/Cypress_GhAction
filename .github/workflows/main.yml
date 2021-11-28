@@ -11,8 +11,8 @@ jobs:
   install:
      runs-on: ubuntu-latest
      steps:
-       - name Install
-          uses: cypress-io/github-action@v2
+       - name: Install
+        uses: cypress-io/github-action@v2
           with:
             runTests: false
          run: yarn build
