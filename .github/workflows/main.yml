@@ -25,8 +25,9 @@ jobs:
 
       - name: Collect report and merge it
         run: yarn run gen:report
-     - name: Move report html to public folder
-       run: mv ./cypress/reports/html ./public
+
+      - name: Move report html to public folder
+        run: mv ./cypress/reports/html ./public
 
       - name: Deploy report page
         uses: peaceiris/actions-gh-pages@v3
