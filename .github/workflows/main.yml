@@ -20,11 +20,11 @@ jobs:
           $(npm bin)/cypress cache list
           $(npm bin)/cypress verify
       - name: Run Cypress tests
-        run: npm run cy:run
+        run: yarn run cy:run
         continue-on-error: true
 
       - name: Collect report and merge it
-        run: npm run gen:report
+        run: yarn run gen:report
 
       - name: Deploy report page
         uses: peaceiris/actions-gh-pages@v3
