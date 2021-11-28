@@ -10,10 +10,6 @@ jobs:
   execute-running:
     runs-on: ubuntu-latest
     container: cypress/browsers:node14.17.0-chrome88-ff89
-    strategy:
-      fail-fast: false
-      matrix:
-        containers: [1, 2, 3, 4, 5]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -27,6 +23,4 @@ jobs:
       - name: running
         uses: cypress-io/github-action@v2
         with:
-            start: yarn run:cy
-            browser: chrome
-            parallel: true
+            start: yarn cypress run
