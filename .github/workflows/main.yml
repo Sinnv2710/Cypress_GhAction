@@ -7,20 +7,29 @@ on:
         required: true
         default: 'Sinnv2710'
 jobs:
-  execute-running:
-    runs-on: ubuntu-latest
-    container: cypress/browsers:node14.17.0-chrome88-ff89
+  cypress-e2e-chrome81:
+    name: Run on Chrome 81
+    runs-on: ubuntu-18.04
+    container: cypress/browsers:node12.16.2-chrome81-ff75
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - name: Install a project with a clean slate
+        run: |
+          npm ci
+          $(npm bin)/cypress cache path
+          $(npm bin)/cypress cache list
+          $(npm bin)/cypress verify
+      - name: Run Cypress tests
+        run: npm run cy:run
+        continue-on-error: true
 
-      - name: Cypress install
-        uses: cypress-io/github-action@v2
-        with:
-            runTests: false
-            build: yarn
+      - name: Collect report and merge it
+        run: npm run gen:report
 
-      - name: running
-        uses: cypress-io/github-action@v2
+      - name: Deploy report page
+        uses: peaceiris/actions-gh-pages@v3
         with:
-            start: yarn cypress run
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./cypress/reports/html
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
