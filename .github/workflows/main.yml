@@ -20,11 +20,32 @@ jobs:
           runTests: false
       # report machine parameters
       - run: yarn cypress info
-      - run: cy:run
-
       - name: Save build folder
         uses: actions/upload-artifact@v2
         with:
           name: build
           if-no-files-found: error
           path: build
+
+  running:
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node14.17.0-chrome88-ff89
+    needs: install
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3, 4, 5]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Download the build folders
+        uses: actions/download-artifact@v2
+        with:
+            name: build
+            path: build
+
+      - name: running
+        uses: cypress-io/github-action@v2
+        with:
+            start: yarn run:cy
