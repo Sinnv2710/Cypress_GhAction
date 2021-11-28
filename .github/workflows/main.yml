@@ -7,14 +7,6 @@ on:
         required: true
         default: 'Sinnv2710'
 jobs:
-
-  install:
-     runs-on: ubuntu-latest
-     steps:
-       - name: Install
-         run: yarn build
-       - name: Save Cypress artifacts
-
   e2e_tests:
       runs-on: ubuntu-latest
       needs: install
@@ -25,8 +17,3 @@ jobs:
           with:
               build: yarn build
               run: yarn cy:run
-
-
-
-
-
