@@ -25,11 +25,13 @@ jobs:
 
       - name: Collect report and merge it
         run: yarn run gen:report
+     - name: Move report html to public folder
+       run: mv ./cypress/reports/html ./public
 
       - name: Deploy report page
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./cypress/reports/html
+          publish_dir: ./public
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
