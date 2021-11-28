@@ -1,0 +1,35 @@
+{
+  "name": "finalassignmentcypress",
+  "version": "0.0.1",
+  "description": "this is final assignment for tillpos using Cypress to build automation framework",
+  "main": "index.js",
+  "scripts": {
+    "cy:open": "yarn cypress.cmd open",
+    "cy:run": " yarn cypress.cmd run",
+    "report:merge": "mochawesome-merge  cypress/reports/mocha/*.json> cypress/reports/report.json",
+    "report:gen" : "marge cypress/reports/report.json -o cypress/reports/html",
+    "move:html" : "node ./cypress/support/reportSupport.js",
+    "gen:report": "yarn report:merge && yarn report:gen && yarn move:html",
+    "clean:win": "rmdir /S /Q cypress\\reports cypress\\screenshots",
+    "clean:unix": "rm -R -f cypress/reports cypress/screenshots"
+  },
+  "repository": "git+https://github.com/Sinnv2710/finalAssignmentCypress.git",
+  "author": "Sinnv2710",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sinnv2710/finalAssignmentCypress/issues"
+  },
+  "homepage": "https://github.com/Sinnv2710/finalAssignmentCypress#readme",
+  "dependencies": {
+    "cypress": "^9.1.0",
+    "faker": "^5.5.3",
+    "moment": "^2.29.1"
+  },
+  "devDependencies": {
+    "cypress-multi-reporters": "^1.5.0",
+    "mocha": "^9.1.3",
+    "mochawesome": "^7.0.1",
+    "mochawesome-merge": "^4.2.0",
+    "mochawesome-report-generator": "^6.0.1"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "reporter": "cypress-multi-reporters",
+  "reporterOptions": {
+    "reporterEnabled": "mochawesome",
+    "mochawesomeReporterOptions": {
+      "reportDir": "cypress/reports/mocha",
+      "quite": true,
+      "overwrite": false,
+      "html": false,
+      "json": true
+    }
+  },
+  "baseUrl": "https://computer-database.herokuapp.com",
+  "video": false,
+  "defaultCommandTimeout": 200000,
+  "requestTimeout": 200000,
+  "screenshotsFolder": "cypress/screenshots",
+  "screenshotOnRunFailure": true,
+  "trashAssetsBeforeRuns": false,
+  "testFiles": "**/*.spec.js",
+  "supportFile": "cypress/support/index.js",
+  "chromeWebSecurity": false,
+  "viewportHeight": 700,
+  "viewportWidth": 1382,
+  "watchForFileChanges": false,
+  "experimentalSessionSupport": true
+}

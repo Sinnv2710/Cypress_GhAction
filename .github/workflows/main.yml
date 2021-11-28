@@ -1,0 +1,40 @@
+name: Github Actions Demo
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Nice to meet you TillPos'
+        required: true
+        default: 'Sinnv2710'
+jobs:
+
+  install:
+     runs-on: ubuntu-latest
+     steps:
+       - name Install
+          uses: cypress-io/github-action@v2
+          with:
+            runTests: false
+         run: yarn build
+       - name: Save Cypress artifacts
+         uses: actions/upload-artifact@v2
+         with:
+           name: build
+           if-no-files-found: error
+           path: build
+
+  e2e_tests:
+      runs-on: ubuntu-latest
+      needs: install
+      container: cypress/browsers:node14.17.0-chrome91-ff89
+      steps:
+        - name: Cypress run
+          uses: cypress-io/github-action@v2
+          with:
+              build: yarn build
+              run: yarn cy:run
+
+
+
+
+
