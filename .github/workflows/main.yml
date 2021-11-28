@@ -7,26 +7,32 @@ on:
         required: true
         default: 'Sinnv2710'
 jobs:
+  cypress-e2e-chrome81:
+    name: Run on Chrome 81
+    runs-on: ubuntu-18.04
+    container: cypress/browsers:node12.16.2-chrome81-ff75
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install a project with a clean slate
+        run: |
+          yarn
+          $(npm bin)/cypress cache path
+          $(npm bin)/cypress cache list
+          $(npm bin)/cypress verify
+      - name: Run Cypress tests
+        run: yarn run cy:run
+        continue-on-error: true
 
-  install:
-     runs-on: ubuntu-latest
-     steps:
-       - name: Install
-         run: yarn build
-       - name: Save Cypress artifacts
+      - name: Collect report and merge it
+        run: yarn run gen:report
 
-  e2e_tests:
-      runs-on: ubuntu-latest
-      needs: install
-      container: cypress/browsers:node14.17.0-chrome91-ff89
-      steps:
-        - name: Cypress run
-          uses: cypress-io/github-action@v2
-          with:
-              build: yarn build
-              run: yarn cy:run
+      - name: Move report html to public folder
+        run: mv ./cypress/reports/html ./public
 
-
-
-
-
+      - name: Deploy report page
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'

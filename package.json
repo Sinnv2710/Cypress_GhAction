@@ -4,8 +4,8 @@
   "description": "this is final assignment for tillpos using Cypress to build automation framework",
   "main": "index.js",
   "scripts": {
-    "cy:open": "yarn cypress.cmd open",
-    "cy:run": " yarn cypress.cmd run",
+    "cy:open": "yarn cypress open",
+    "cy:run": " yarn cypress run",
     "report:merge": "mochawesome-merge  cypress/reports/mocha/*.json> cypress/reports/report.json",
     "report:gen" : "marge cypress/reports/report.json -o cypress/reports/html",
     "move:html" : "node ./cypress/support/reportSupport.js",
