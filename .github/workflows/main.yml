@@ -7,29 +7,9 @@ on:
         required: true
         default: 'Sinnv2710'
 jobs:
-  install:
-    runs-on: ubuntu-latest
-    container: cypress/browsers:node12.18.3-chrome87-ff82
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Cypress install
-        uses: cypress-io/github-action@v2
-        with:
-          # Disable running of tests within install job
-          runTests: false
-          build: yarn
-
-      - name: Save build folder
-        uses: actions/upload-artifact@v2
-        with:
-          ls : la -ls
-
   execute-running:
     runs-on: ubuntu-latest
     container: cypress/browsers:node14.17.0-chrome88-ff89
-    needs: install
     strategy:
       fail-fast: false
       matrix:
@@ -38,16 +18,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Download the build folders
-        uses: actions/download-artifact@v2
+      - name: Cypress install
+        uses: cypress-io/github-action@v2
         with:
-            name: build
-            path: build
+            runTests: false
+            build: yarn
 
       - name: running
         uses: cypress-io/github-action@v2
         with:
-            install: false
             start: yarn run:cy
             browser: chrome
             parallel: true
